@@ -1,0 +1,5 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+erp.kkwagh.edu.in	TRUE	/	FALSE	1999999999	ASP.NET_SessionId	1i52ltbfvpdyyy4oue3rn0py
+erp.kkwagh.edu.in	TRUE	/	FALSE	1999999999	SameSite	Lax
+

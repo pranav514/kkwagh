@@ -1,0 +1,95 @@
+/* 
+    Created on : 23 Feb, 2019, 4:04:32 PM
+    Author     : Nakul Puranik
+*/
+ort url('https://fonts.googleapis.com/css?family=Archivo+Narrow:400,600|Archivo:400,600|Raleway:400,600,700|Roboto:400,700');
+/*
+
+font-family: 'Roboto', sans-serif;
+font-family: 'Raleway', sans-serif;
+font-family: 'Archivo Narrow', sans-serif;
+font-family: 'Archivo', sans-serif;
+*/
+
+* {
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+body {
+    background-size:cover;
+
+}
+
+.content-main {
+    position: fixed; 
+    bottom: 25px; 
+    right: 5px;
+    width: 30%;
+    background: rgba(255,255,255,0.35);
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #999;
+    box-shadow: inset 1px 3px 5px #fff;
+    margin-right: 13px;
+}
+.instName {
+    color: #000;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+.logo {
+    height: 45px;
+    margin-bottom: 25px;
+}
+.input-group {
+    margin-bottom: 15px;
+}
+.form-control {
+    background-color: rgba(255,255,255,0.85);
+}
+.captcha-container {
+    margin-bottom: 10px;
+    text-align: center;
+}
+.captchadiv {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    border: 1px solid #999;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 5px;
+}
+.caaaaan mitbtn {
+    text-align: center;
+    text-align: center;
+
+}
+.submitbtn {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.submitbtn .btn {
+    background: #31b0d5;
+    color: #fff;
+}
+.fgtpass a {
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: #000;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+.content-main {width: 46%;}}
+@media only screen and (max-width: 480px) {
+.content-main {width: 98%; bottom: 51px;}
+}

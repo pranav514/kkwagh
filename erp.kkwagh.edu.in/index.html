@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+
+    <html> 
+
+<!-- Mirrored from erp.kkwagh.edu.in/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Mar 2022 08:08:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head id="Head1"><title>
+	LOGIN
+</title><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" /><link type="text/css" rel="stylesheet" href="css/font-awesome.min.css" /><link type="text/css" rel="stylesheet" href="css/style03.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script type="text/javascript" src="../code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="../code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <style>  
+        .ui-widget-header,.ui-state-default, ui-button
+        {  
+            background:#e9ecef;  
+            color: black;  
+            font-weight: bold;  
+        }  
+    </style> 
+</head>
+<body style="background-image: url('images/LoginPage/bg1.jpg')">
+    <script type="text/javascript">
+        //$(document).ready(function () {
+        //    funCall();
+        //});
+
+        var dialog;
+        function funCall() {
+
+            $('#imgCaptcha').src = "#";
+            //return false;
+
+            // alert("aa");
+            var result = ""; var vNow = "";
+            $.ajax({
+                type: "POST",
+                url: "AdminLogin.aspx/funGenerateCaptcha",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: "",
+                async: false,
+                success: function (data) { //alert(data.d);
+                    $('#imgCaptcha').attr('src', "data:image/png;base64," + data.d);
+                }
+            });
+            //alert("aa");
+            return false;
+        }
+
+        function funValidateCaptcha() {
+            var result = "FALSE";
+            $.ajax({
+                type: "POST",
+                url: "AdminLogin.aspx/funValidateCapcha",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: "{'strCaptcha':'" + document.getElementById("txtCaptcha").value.trim() + "'}",
+                async: false,
+                success: function (data) { //alert(data.d);
+                    result = data.d;
+                }
+            });
+
+            if (result == "TRUE")
+                return true;
+            else
+                return false;
+        }
+
+        function funLoad() {
+            funCall();
+           ModalPopupsAlert1();
+        }
+
+        function funForgetPassword() {
+            var pageURL = "frmForgetPassword.html";
+            var w = 550;
+            var h = 400;
+            var title = "ForgotPassword";
+
+            var left = (screen.width / 2) - (w / 2);
+            var top = (screen.height / 2) - (h / 2);
+            window.open('frmForgetPassword.html', "ForgotPassword", 'width=' + w + ',height=' + h + ',titlebar=yes,left=' + left + ',top=' + top + ',scrollbars=0');
+            return false;
+        }
+
+        function funProcessing() {
+            ModalPopups.Indicator
+            (
+                "jsProcess",
+                "Message",
+                "<div id='divProcess' style='padding:25px;color:black' class='holderName'>P&nbsp;&nbsp;R&nbsp;&nbsp;O&nbsp;&nbsp;C&nbsp;&nbsp;E&nbsp;&nbsp;S&nbsp;&nbsp;S&nbsp;&nbsp;I&nbsp;&nbsp;N&nbsp;&nbsp;G . . . . . . . .</div>",
+                ""
+            );
+        }
+   
+        function ModalPopupsAlert1() {
+            
+            if (document.getElementById('hdnMsg').value != "")
+            {
+                document.getElementById("dialog-message").innerHTML = document.getElementById("hdnMsg").value;
+                dialog = $("#dialog-message").dialog({
+                    autoOpen: true,
+                    width: 500,
+                    height: 220,
+                    modal: true,
+                    buttons: {
+                        "Ok": funClick/*,
+            Cancel: funCancel*/
+                    }
+                });
+            }
+        }
+
+        function funClick() {
+            if (document.getElementById('hdnFlag').value == "R") {
+                dialog.dialog("close");
+                //ModalPopups.Cancel("jsAlert1");
+                document.getElementById('txtUserId').focus();//1049214001
+            }
+            else if (document.getElementById('hdnFlag').value == "I") {
+                location.href = 'AdminLogin.html';
+            }
+            else if (document.getElementById('hdnFlag').value == "D") {
+                Changepassword('D');
+                return false;
+            }
+        }
+
+        function Changepassword(flag) {
+            var w = 600;
+            var h = 500;
+            var title = "ChangePassword";
+
+            var left = (screen.width / 2) - (w / 2);
+            var top = (screen.height / 2) - (h / 2);
+
+
+            //added by ramdayal
+            var strId = document.getElementById("hdloginid").value;
+            var sUrl = "Changepassword.aspx?FLAG=" + flag;
+            window.open(sUrl, "ChangePassword", 'width=' + w + ',height=' + h + ',titlebar=yes,left=' + left + ',top=' + top + ',scrollbars=0');
+            return false;
+            //---------------------------------------------
+
+
+            //if ("EMPLOYEE" == document.getElementById("hdtype").value) {
+            //    var strId = document.getElementById("hdloginid").value;
+            //    // var sUrl = "Changepassword.aspx?emp=" + strId + "&FLAG=" + flag;
+            //    var sUrl = "Changepassword.aspx?FLAG=" + flag;
+            //    window.open(sUrl, "ChangePassword", 'width=' + w + ',height=' + h + ',titlebar=yes,left=' + left + ',top=' + top + ',scrollbars=0');
+            //    return false;
+            //}
+
+            //if ("STUDENT" == document.getElementById("hdtype").value) {
+            //    var strId = document.getElementById("hdloginid").value;
+            //    // var sUrl = "Changepassword.aspx?STUID=" + strId + "&FLAG=" + flag;
+            //    var sUrl = "Changepassword.aspx?FLAG=" + flag;
+            //    window.open(sUrl, "ChangePassword", 'width=' + w + ',height=' + h + ',titlebar=yes,left=' + left + ',top=' + top + ',scrollbars=0');
+            //}
+
+            //if ("PARENT" == document.getElementById("hdtype").value) {
+            //    var strId = document.getElementById("hdloginid").value;
+            //    //var sUrl = "Changepassword.aspx?PRNTID=" + strId + "&FLAG=" + flag;
+            //    var sUrl = "Changepassword.aspx?FLAG=" + flag;
+            //    window.open(sUrl, "ChangePassword", 'width=' + w + ',height=' + h + ',titlebar=yes,left=' + left + ',top=' + top + ',scrollbars=0');
+            //}
+        }
+
+        function funValidation() {
+            debugger
+            if (document.getElementById("txtUserId").value == "")// || trim(document.getElementById("txtpassword").value)=="") 
+            {
+                alert("Please enter the Login Id");
+                document.getElementById("txtUserId").focus();
+                document.getElementById("txtCaptcha").value = "";
+                return false;
+            }
+
+            if (document.getElementById("txtPassword").value == "") {
+                alert("Please enter the Password");
+                document.getElementById("txtPassword").focus();
+                document.getElementById("txtCaptcha").value = "";
+                return false;
+            }
+
+            if (document.getElementById("txtCaptcha").value == "")
+            {
+                alert("Please enter a valid captcha.");
+                document.getElementById("txtCaptcha").focus();
+                return false;
+            }
+          
+            if (!funValidateCaptcha())
+            {
+                alert("Please enter a valid captcha.");
+                document.getElementById("txtCaptcha").value = "";
+                document.getElementById("txtCaptcha").focus();
+                funCall();
+                return false;
+            }
+            
+            document.getElementById('btnLogin').disabled = true;
+            __doPostBack('btnLogin','');
+            return false;
+          
+        }
+
+        function ModalPopupsCustom1() {
+            ModalPopups.Custom("idCustom1",
+                "OTP",
+                "<div style='padding: 25px;'>" +
+                "<table>" +
+                "<tr><td class='caption'>OTP&nbsp;:&nbsp;</td><td><input type='password' id='txtVal' style='width:100px;'/></td></tr>" +
+                "</table>" +
+                "</div>",
+                {
+                    width: 250,
+                    buttons: "ok,cancel",
+                    okButtonText: "Submit",
+                    cancelButtonText: "Cancel",
+                    onOk: "ModalPopupsCustom1Save()",
+                    onCancel: "ModalPopupsCustom1Cancel()"
+                }
+            );
+
+            ModalPopups.GetCustomControl("txtVal").focus();
+        }
+
+        function ModalPopupsCustom1Save() {
+            var custom1Name = ModalPopups.GetCustomControl("txtVal");
+
+            if (trim(custom1Name.value) == "") {
+                alert("Please enter the OTP");
+                custom1Name.focus();
+            }
+            else {
+                if (custom1Name.value == document.getElementById("hdnWCCSOTP").value) {
+                    ModalPopups.Cancel("idCustom1");
+                    location.href = "AdminLogin.html";
+                }
+                else {
+                    alert("The OTP entered is incorrect.");
+                    custom1Name.focus();
+                }
+            }
+        }
+
+        function ModalPopupsCustom1Cancel() {
+            ModalPopups.Cancel("idCustom1");
+        }
+    </script>
+    <form name="form1" method="post" action="https://erp.kkwagh.edu.in/" id="form1" autocomplete="off">
+<div>
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJOTMwOTE3NTM3DxYCHg5MT0dJTl9CQVNFRF9PTmUWAgIBD2QWAgIDD2QWAmYPZBYGAg8PZBYCAgEPEGQPFgFmFgEQBQNjYXMFA2Nhc2cWAWZkAhMPDxYCHgdFbmFibGVkZ2RkAhcPZBYCAgEPEGRkFgFmZGQXl2nUkSzB0TqdUuIGlf1zPM2EDKCex5MNWxI+9VEg3Q==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="WebResource5c4c.js?d=WWLGr_LgBVBK3YwzXztW_1JRA_U9q7kqqMpgwJTOWWe7rJ1yqqp_QF1jQdf4nG1wYZ-Y6_h9dLs6hDa1mpu_fJHrOkN7uFyzQYrasJB2uPY1&amp;t=637100542300000000" type="text/javascript"></script>
+
+
+<script src="ScriptResource363a.js?d=x0nLz0DkjAQ4nXbLSVzDbheWMsLksJc4Tc7rmdHNukn9opcx5qGges4-0dmAd20zNh6DoDJbCAOEc926f0mWz_2efnAgISqrxSY-UGGUrAHSZm_nPQ6NkALq9GgyDKMGD2t7WGAB9eK3PASjYT-T90l8I35m4E_BdaA6WlT8S5ZL-zzDB6ixVzcORPcnMBxb0&amp;t=ffffffff9a9577e8" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="ScriptResourceb548.js?d=m8rSFkH4KQ66GgqEZy2FH6LwW0xYMuGYJ0BczOuIfqJKwSH5-ifeSC_WfonE9FlP_30w1pcqps6OklnDULExlvxvK73pFUOcxzJgWMBZDx2nRIlP14gZDe89N5A1plBHepKQi7aQaYEa-r0ffNjByR_wkzznzfJpdgV_vRZWAMlQFeFOa0UdfhvAzd8YM2JK0&amp;t=ffffffff9a9577e8" type="text/javascript"></script>
+<script src="WebResource6461.js?d=OlEnp0CdV_hnzRbs0X8Sf3nv-YVNddKT78Toub9uaCF4HCDsUtSovspJFMYe42J-ILqkWflABwKEvngPDqxX0371WNgA1vEcMb8je_LlUbI1&amp;t=637100542300000000" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="B8B84CAE" />
+</div>
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ScriptManager1', 'form1', ['tUpdatePanel1',''], [], [], 90, '');
+//]]>
+</script>
+
+    <div id="UpdatePanel1">
+	
+        <script type="text/javascript">
+            Sys.Application.add_load(funLoad);
+        </script>
+        <input type="hidden" name="hdnMsg" id="hdnMsg" />
+        <input type="hidden" name="hdtype" id="hdtype" />
+        <input type="hidden" name="hdloginid" id="hdloginid" />
+        <input type="hidden" name="hdnFlag" id="hdnFlag" value="R" />
+        <input type="hidden" name="hdnWCCSOTP" id="hdnWCCSOTP" />
+     
+            <div id="dialog-message" title="Message"></div>
+
+        <footer style="position: fixed; z-index: 99; width: 100%; background: #333; bottom: 0; color: #fff; font-size: 12px; padding: 2px; text-align: center;">
+            Copyright &copy; Wordpro Computer Consultancy Services Pvt. Ltd. All Rights Reserved.
+        </footer>
+        <div class="container-fluid">
+            <div class="content-main">
+                
+               
+                
+                <h2 class="instName">LOGIN</h2>
+                 
+                
+                
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-user"></i></span>
+                    </div>
+                    <input name="txtUserId" type="text" id="txtUserId" class="form-control" placeholder="Username" aria-label="Username" onfocus="funFocus(this)" onblur="funBlur(this);" />
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3"><i class="fa fa-lock"></i></span>
+                    </div>
+                    <input name="txtPassword" type="password" id="txtPassword" class="form-control" placeholder="Password" onfocus="funFocus(this)" onblur="funBlur(this)" />
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon4"><i class="fa fa-text-width"></i></span>
+                    </div>
+                    <input name="txtCaptcha" type="text" id="txtCaptcha" class="form-control" placeholder="Captcha" />
+                </div>
+                 
+                <div class="captcha-container">
+                    
+                    <div>   
+                        
+                        <img id="imgCaptcha" />
+                      
+                        <i class="fa fa-refresh" style="margin-top:20px; display: inline-block;" onclick="return funCall();"></i>
+                        
+                    </div>
+                    
+                </div>
+                <div class="submitbtn">
+                <input type="submit" name="btnLogin" value="Login" onclick="return funValidation();" id="btnLogin" class="btn btn-sm" />
+                <input type="submit" name="btnreset" value="Reset" onclick="return funReset();" id="btnreset" class="btn btn-sm" />
+                </div>
+                <div class="fgtpass">
+                    <a href="#" onclick="return funForgetPassword()">Forgot Password ?
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+</div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+WebForm_AutoFocus('txtUserId');//]]>
+</script>
+</form>
+</body>
+
+<!-- Mirrored from erp.kkwagh.edu.in/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Mar 2022 08:08:40 GMT -->
+</html>
